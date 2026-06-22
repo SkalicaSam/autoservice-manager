@@ -1,9 +1,10 @@
 package com.sam.autoservice_manager.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Customer {
@@ -16,6 +17,10 @@ public class Customer {
     private String firstName;
     private String lastName;
     private String phone;
+
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
+    private List<Vehicle> vehicles = new ArrayList<>();
 
     public Customer() {
     }
@@ -58,5 +63,13 @@ public class Customer {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 }

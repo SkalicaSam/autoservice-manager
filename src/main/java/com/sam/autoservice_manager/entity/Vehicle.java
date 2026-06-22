@@ -2,6 +2,9 @@ package com.sam.autoservice_manager.entity;
 
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Vehicle {
@@ -19,6 +22,10 @@ public class Vehicle {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @OneToMany(mappedBy = "vehicle")
+    @JsonIgnore
+    private List<Appointment> appointments = new ArrayList<>();
 
     public Vehicle() {
     }
@@ -65,6 +72,14 @@ public class Vehicle {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
     }
 
 }

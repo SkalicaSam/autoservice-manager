@@ -27,6 +27,10 @@ public class Vehicle {
     @JsonIgnore
     private List<Appointment> appointments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "vehicle")
+    @JsonIgnore
+    private List<ServiceRecord> serviceRecords = new ArrayList<>();
+
     public Vehicle() {
     }
 
@@ -80,6 +84,14 @@ public class Vehicle {
 
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    public List<ServiceRecord> getServiceRecords() {
+        return serviceRecords;
+    }
+
+    public void setServiceRecords(List<ServiceRecord> serviceRecords) {
+        this.serviceRecords = serviceRecords;
     }
 
 }

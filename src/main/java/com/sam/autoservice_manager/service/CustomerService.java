@@ -1,7 +1,9 @@
 package com.sam.autoservice_manager.service;
 
 
+import com.sam.autoservice_manager.dto.VehicleResponse;
 import com.sam.autoservice_manager.entity.Customer;
+import com.sam.autoservice_manager.entity.Vehicle;
 import com.sam.autoservice_manager.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,4 +30,13 @@ public class CustomerService {
         return customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
     }
+
+    public List<VehicleResponse> getVehiclesByCustomerId(Long id) {
+        Customer customer = getCustomerById(id);
+
+        return customer.getVehicles().stream()
+                .map(vehicle -> new VehicleResponse(vehicle.getId(), vehicle.getBrand(), vehicle.getModel(), vehicle.getLicensePlate()))
+                .toList();
+    }
+
 }

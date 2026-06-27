@@ -1,6 +1,7 @@
 package com.sam.autoservice_manager.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sam.autoservice_manager.dto.VehicleResponse;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;

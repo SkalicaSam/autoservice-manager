@@ -1,6 +1,10 @@
 package com.sam.autoservice_manager.service;
 
+import com.sam.autoservice_manager.dto.AppointmentResponse;
 import com.sam.autoservice_manager.dto.CreateVehicleRequest;
+import com.sam.autoservice_manager.dto.ServiceRecordResponse;
+import com.sam.autoservice_manager.dto.VehicleDetailResponse;
+import com.sam.autoservice_manager.entity.Appointment;
 import com.sam.autoservice_manager.entity.Customer;
 import com.sam.autoservice_manager.entity.Vehicle;
 import com.sam.autoservice_manager.repository.CustomerRepository;
@@ -40,5 +44,42 @@ public class VehicleService {
 
     public List<Vehicle> getAllVehicles() {
         return vehicleRepository.findAll();
+    }
+
+    public VehicleDetailResponse getVehicleDetailByVehicleId(Long id) {
+        Vehicle vehicle = vehicleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+
+        List<AppointmentResponse> appointmentResponses =
+                vehicle.getAppointments()
+                        .stream()
+                        .map(a -> new AppointmentResponse(
+                                a.getId(),
+                                a.getAppointmentDate(),
+                                a.getStatus(),
+                                a.getNote()
+                        ))
+                        .toList();
+
+        List<ServiceRecordResponse> serviceResponses =
+                vehicle.getServiceRecords()
+                        .stream()
+                        .map(s -> new ServiceRecordResponse(
+                                s.getId(),
+                                s.getServiceDate(),
+                                s.getDescription(),
+                                s.getPrice()
+                        ))
+                        .toList();
+
+
+        return new VehicleDetailResponse(
+                vehicle.getId(),
+                vehicle.getBrand(),
+                vehicle.getModel(),
+                vehicle.getLicensePlate(),
+                appointmentResponses,
+                serviceResponses
+        );
     }
 }

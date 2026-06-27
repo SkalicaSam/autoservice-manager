@@ -19,7 +19,7 @@ public class Customer {
     private String lastName;
     private String phone;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Vehicle> vehicles = new ArrayList<>();
 

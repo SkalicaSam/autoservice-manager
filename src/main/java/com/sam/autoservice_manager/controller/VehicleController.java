@@ -3,6 +3,8 @@ package com.sam.autoservice_manager.controller;
 
 
 import com.sam.autoservice_manager.dto.CreateVehicleRequest;
+import com.sam.autoservice_manager.dto.VehicleDetailResponse;
+import com.sam.autoservice_manager.dto.VehicleResponse;
 import com.sam.autoservice_manager.entity.Vehicle;
 import com.sam.autoservice_manager.service.VehicleService;
 import org.springframework.web.bind.annotation.*;
@@ -27,5 +29,10 @@ public class VehicleController {
     @GetMapping
     public List<Vehicle> getAll() {
         return vehicleService.getAllVehicles();
+    }
+
+    @GetMapping("/{id}")
+    public VehicleDetailResponse getVehicleDetailByVehicleId(@PathVariable Long id) {
+        return vehicleService.getVehicleDetailByVehicleId(id);
     }
 }

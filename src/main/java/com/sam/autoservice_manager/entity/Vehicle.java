@@ -23,11 +23,11 @@ public class Vehicle {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "vehicle")
+    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Appointment> appointments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "vehicle")
+    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<ServiceRecord> serviceRecords = new ArrayList<>();
 

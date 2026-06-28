@@ -46,4 +46,13 @@ public class AppointmentService {
     public List<Appointment> getAll() {
         return appointmentRepository.findAll();
     }
+
+    public Appointment updateStatus(Long id, String status) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Appointment not found"));
+
+        appointment.setStatus(status);
+
+        return appointmentRepository.save(appointment);
+    }
 }

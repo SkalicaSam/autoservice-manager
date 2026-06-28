@@ -1,5 +1,6 @@
 package com.sam.autoservice_manager.controller;
 
+import com.sam.autoservice_manager.dto.AppointmentStatusUpdateRequest;
 import com.sam.autoservice_manager.dto.CreateAppointmentRequest;
 import com.sam.autoservice_manager.entity.Appointment;
 import com.sam.autoservice_manager.service.AppointmentService;
@@ -28,4 +29,12 @@ public class AppointmentController {
     public List<Appointment> getAll() {
         return appointmentService.getAll();
     }
+
+    @PatchMapping("/{id}/status")
+    public Appointment updateStatus(
+            @PathVariable Long id,
+            @RequestBody AppointmentStatusUpdateRequest request) {
+        return appointmentService.updateStatus(id, request.getStatus());
+    }
+
 }

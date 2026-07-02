@@ -2,12 +2,15 @@ package com.sam.autoservice_manager.service;
 
 
 import com.sam.autoservice_manager.dto.VehicleResponse;
+import com.sam.autoservice_manager.dto.response.CustomerAppointmentResponse;
 import com.sam.autoservice_manager.entity.Customer;
 import com.sam.autoservice_manager.entity.Vehicle;
 import com.sam.autoservice_manager.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static java.util.Arrays.stream;
 
 @Service
 public class CustomerService {
@@ -39,4 +42,21 @@ public class CustomerService {
                 .toList();
     }
 
+    public List<CustomerAppointmentResponse> getAppointmentsByCustomerId(Long id) {
+        Customer customer = getCustomerById(id);
+
+        return customer.getVehicles()
+                .stream()
+                .flatMap(vehicle -> vehicle.getAppointments().stream())
+                .map(appointment -> new CustomerAppointmentResponse(
+                        appointment.getId(),
+                        appointment.getAppointmentDate(),
+                        appointment.getStatus(),
+                        appointment.getVehicle().getBrand(),
+                        appointment.getVehicle().getModel(),
+                        appointment.getVehicle().getLicensePlate()
+                ))
+                .toList();
+
+    }
 }

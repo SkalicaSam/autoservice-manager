@@ -3,6 +3,7 @@ package com.sam.autoservice_manager.controller;
 
 import com.sam.autoservice_manager.dto.CreateVehicleRequest;
 import com.sam.autoservice_manager.dto.VehicleResponse;
+import com.sam.autoservice_manager.dto.response.CustomerAppointmentResponse;
 import com.sam.autoservice_manager.entity.Customer;
 import com.sam.autoservice_manager.entity.Vehicle;
 import com.sam.autoservice_manager.service.CustomerService;
@@ -38,5 +39,10 @@ public class CustomerController {
     @GetMapping("/{id}/vehicles")
     public List<VehicleResponse> getVehiclesByCustomerId(@PathVariable Long id) {
         return customerService.getVehiclesByCustomerId(id);
+    }
+
+    @GetMapping("/{id}/appointments")
+    public List<CustomerAppointmentResponse> getAppointmentsByCustomerId(@PathVariable Long id) {
+        return customerService.getAppointmentsByCustomerId(id);
     }
 }
